@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cookpad.slack_reporter">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

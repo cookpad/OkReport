@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">core</string>
+    <string name="title_hint">What\'s the issue?</string>
+    <string name="step_hint">Write a description</string>
+    <string name="add_new_step">Add new step</string>
+    <string name="send_report">Send report</string>
+    <string name="step_number">Step %1$d</string>
+    <string name="new_report">New report</string>
+    <string name="title_validation">Write an issue\'s description prior to submit the report.</string>
+    <string name="sending_report">Sending report</string>
+    <string name="please_wait">Please wait</string>
+    <string name="total_steps">%1$d steps</string>
+    <plurals name="total_steps">
+        <item quantity="one">%d step</item>
+        <item quantity="other">%d steps</item>
+    </plurals>
+    <string name="highlight_screenshot">Highlight screenshot</string>
+    <string name="clear">Clear</string>
+    <string name="ok">OK</string>
+</resources>

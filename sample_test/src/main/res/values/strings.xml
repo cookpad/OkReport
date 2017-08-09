@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">OkReport</string>
+    <string name="trigger_explanation">Click here or shake device</string>
+</resources>
