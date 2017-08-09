@@ -27,15 +27,15 @@ allprojects {
 Add to app module *gradle.build* file
 ```gradle
 dependencies {
-	compile 'com.github.cookpad:OkReport:core:0.0.1'
+	compile 'com.github.cookpad:OkReport:core:0.0.2'
 
 	//Post the report on an Slack channel
-	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.1'
-   	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.1'
+	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.2'
+   	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.2'
 
 	//Trigger the report screen when the device is shaken
-	debugCompile 'com.github.cookpad:OkReport:shake_gesture:0.0.1'
-   	releaseCompile 'com.github.cookpad:OkReport:shake_gesture_no_op:0.0.1'
+	debugCompile 'com.github.cookpad:OkReport:shake_gesture:0.0.2'
+   	releaseCompile 'com.github.cookpad:OkReport:shake_gesture_no_op:0.0.2'
 }
 ```
 
@@ -109,7 +109,7 @@ class OkReportApp : Application() {
 
 ## Customization
 
-OkReport's sources is composed by several Android modules. This loosely coupled system allows to clients to **provide their own implementations when some customization is required**.
+OkReport's sources is composed by several Android modules. This loosely coupled system allows clients to **provide their own implementations when some customization is required**.
 
 ### <a name="trigger_gesture"></a> TriggerGesture
 The entry point of OkReport is a `TriggerGesture`. By adding `shake_gesture` module, OkReport triggers the report screen when the device is shaken. But **clients can supply their own implemnentation if other trigger gesture is required.**
