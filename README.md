@@ -2,7 +2,7 @@
 
 An **Android library** which **allows testers to submit reports without living the app**.
 
-Because not all bugs are easy to cath, because not all bugs end with a clean reported crash on some fancy console as the result of a nice pipeline settled for logging exceptions. That's it, **there is always some wrong behaviour which can not be tipified as a bug per se**; and therefore, it requires the **supervision of a human eye** to acknowledge it as a malfunction of the system. **OkReport is the perfect tool for tracking that**.
+Because not all bugs are easy to catch, because not all bugs end with a clean reported crash on some fancy console as the result of a nice pipeline settled for logging exceptions. That's it, **there is always some wrong behaviour which can not be typified as a bug per se**; and therefore, it requires the **supervision of a human eye** to acknowledge it as a malfunction of the system. **OkReport is the perfect tool for tracking that**.
 
 ![Screenshots](assets/intro.png)
 
@@ -95,7 +95,7 @@ class OkReportApp : Application() {
 
 ![Screenshots](assets/step3.gif)
 
-4. #### You may have to detele some steps.
+4. #### You may have to delete some steps.
 
 ![Screenshots](assets/step4.gif)
 
@@ -112,7 +112,7 @@ class OkReportApp : Application() {
 OkReport's sources is composed by several Android modules. This loosely coupled system allows to clients to **provide their own implementations when some customization is required**.
 
 ### <a name="trigger_gesture"></a> TriggerGesture
-The entry point of OkReport is a `TriggerGesture`. By adding `shake_gesture` module, OkReport triggers the report screen when the device is shaken. But **clients can supply their own implemnentation if other trigger gesture is required.**
+The entry point of OkReport is a `TriggerGesture`. By adding `shake_gesture` module, OkReport triggers the report screen when the device is shaken. But **clients can supply their own implementation if other trigger gesture is required.**
 
 If you consider that some gesture may be interesting to add to this lib, please submit a PR as a new separate module with its own no-op version. **`TriggerGesture` is the `interface` that has be implemented to fulfill the contract**:
 
@@ -123,7 +123,7 @@ interface TriggerGesture {
 ```
 
 ### <a name="reporter"></a> Reporter
-OkReport logs reports by delegatng this responsability to a given `Reporter`. By adding `slack_reporter` module, OkReport posts the data retrieved from OkReport into an Slack channel. But **clients can supply their own implemnentation if other logger mechanism is required.**
+OkReport logs reports by delegating this responsibility to a given `Reporter`. By adding `slack_reporter` module, OkReport posts the data retrieved from OkReport into an Slack channel. But **clients can supply their own implementation if other logger mechanism is required.**
 
 If you consider that some Reporter may be interesting to add to this lib, please submit a PR as a new separate module with its own no-op version. **`Reporter` is the `interface` that has be implemented to fulfill the contract**:
 
@@ -142,5 +142,5 @@ interface ReporterCallback {
 * Highlight screenshots: [Ink](https://github.com/simplifycom/ink-android). A light-weight, customizable view for capturing a signature or drawing in an Android app.
 
 ## Limitations
-* OkReport is **not meant to be used as a way of getting feedback from final users on production environment**, it rather should be concived as a comunicational tool to facilitate internal reporting.
-* Slack's api presents a limitation for legacy tokens: **it's not possible to show an image on a posted message without been previously shared on a channel's organization**. That's why when you're creating an instance of `SlackReporter` you muest to supply the name or id of an already existing channel¡s organization where images will be posted isolatedly.
+* OkReport is **not meant to be used as a way of getting feedback from final users on production environment**, it rather should be conceived as a communication tool to facilitate internal reporting.
+* Slack's api presents a limitation for legacy tokens: **it's not possible to show an image on a posted message without been previously shared on a channel's organization**. That's why when you're creating an instance of `SlackReporter` you must to supply the name or id of an already existing channel¡s organization where images will be posted isolatedly.
