@@ -118,6 +118,8 @@ private class MultipartUtility(requestUrl: String, private val charset: String) 
 
         val input = BufferedInputStream(urlConnection.inputStream)
         response.append(input.bufferedReader().use { it.readText() })
+
+        outputStream.close()
         urlConnection.disconnect()
 
         return response.toString().apply {
