@@ -68,9 +68,9 @@ internal fun postToSlack(url: String, payload: String): String {
     }
 }
 
-private class MultipartUtility(requestURL: String, private val charset: String) {
+private class MultipartUtility(requestUrl: String, private val charset: String) {
     private val boundary = "===" + System.currentTimeMillis() + "==="
-    private val urlConnection = (URL(requestURL).openConnection() as HttpURLConnection).apply {
+    private val urlConnection = (URL(requestUrl).openConnection() as HttpURLConnection).apply {
         readTimeout = 10000
         connectTimeout = 15000
         requestMethod = "POST"
