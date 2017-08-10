@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.InputType
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
@@ -104,13 +105,46 @@ class OkReportActivity : AppCompatActivity() {
                 post { scrollToPosition(adapter.itemCount - 1) }
             }
 
+    private fun syncReportChanges() {
+        val etTitle = findViewById<EditText>(R.id.etTitle)
+        OkReportRepository.report = Report(OkReportRepository.retrieveAuthor(this),
+                etTitle.text.toString(), okAdapter.items())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.ok_report_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean =
+            when (item?.itemId) {
+                android.R.id.home -> {
+                    onBackPressed()
+                    true
+                }
+                R.id.menu_item_send_report -> {
+                    sendReport()
+                    true
+                }
+                R.id.menu_item_author -> {
+                    setAuthor()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+
     private fun sendReport() {
-        if (findViewById<EditText>(R.id.etTitle).text.toString().isEmpty()) {
-            Toast.makeText(this, R.string.title_validation, Toast.LENGTH_LONG).show()
+        syncReportChanges()
+
+        if (OkReportRepository.report.author.isEmpty()) {
+            setAuthor({ sendReport() })
             return
         }
 
-        syncReportChanges()
+        if (OkReportRepository.report.issue.isEmpty()) {
+            Toast.makeText(this, R.string.title_validation, Toast.LENGTH_LONG).show()
+            return
+        }
 
         val dialog = MaterialDialog.Builder(this)
                 .title(R.string.sending_report)
@@ -137,28 +171,18 @@ class OkReportActivity : AppCompatActivity() {
         })
     }
 
-    private fun syncReportChanges() {
-        val etTitle = findViewById<EditText>(R.id.etTitle)
-        OkReportRepository.report = Report(etTitle.text.toString(), okAdapter.items())
+    private fun setAuthor(callback: () -> Unit = {}) {
+        MaterialDialog.Builder(this)
+                .title(R.string.author_report)
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input(getString(R.string.write_your_name), OkReportRepository.retrieveAuthor(this),
+                        MaterialDialog.InputCallback { dialog, input ->
+                            OkReportRepository.saveAuthor(this, input.toString())
+                            dialog.dismiss()
+                            callback()
+                        })
+                .show()
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.ok_report_activity_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean =
-            when (item?.itemId) {
-                android.R.id.home -> {
-                    onBackPressed()
-                    true
-                }
-                R.id.menu_item_send_report -> {
-                    sendReport()
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

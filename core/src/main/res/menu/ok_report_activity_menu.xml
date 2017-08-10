@@ -1,8 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_item_author"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/author"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_item_send_report"
         android:icon="@drawable/ic_backup_black_24dp"
         android:title="@string/send_report"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

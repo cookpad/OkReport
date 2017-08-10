@@ -47,7 +47,7 @@ class SlackReporter(val token: String, val webhookURL: String, val deviceSpecs: 
                     val aColor = pickRandomColor()
                     val urlImages = uploadFilesToSlack(token, report.steps.map(Step::pathImage), idOrNameChannelImages)
 
-                    buildJsonTitle(aColor, report.issue, notifyChannel).let { postToSlack(webhookURL, it) }
+                    buildJsonTitle(aColor, report.issue, report.author, notifyChannel).let { postToSlack(webhookURL, it) }
                     buildJsonSteps(aColor, urlImages, report.steps).forEach { postToSlack(webhookURL, it) }
                     buildJsonDeviceSpecs(aColor, deviceSpecs).let { postToSlack(webhookURL, it) }
 
@@ -76,9 +76,9 @@ internal fun pickRandomColor(): String {
 }
 
 @VisibleForTesting
-internal fun buildJsonTitle(hexColor: String, reportTitle: String, notifyChannel: Boolean): String {
+internal fun buildJsonTitle(hexColor: String, reportTitle: String, author: String, notifyChannel: Boolean): String {
     val notification = if (notifyChannel) "<!channel> " else ""
-    val title = "$notification *New Report*"
+    val title = "$notification *New Report* from @$author"
 
     val jsonAttachment = JSONObject().put("fallback", title)
             .put("pretext", title)

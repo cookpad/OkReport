@@ -30,13 +30,13 @@ class NetTest {
     }
 
     @Test fun verifyPostMessageOnSlack() {
-        val jsonTitle = buildJsonTitle("#8DB6CD", "Ignore this message. This is an automated OKReport test", false)
+        val jsonTitle = buildJsonTitle("#8DB6CD", "Ignore this message. This is an automated OKReport test", "authorTest", false)
         val response = postToSlack(webhookURL, jsonTitle)
         assertThat(response, `is`("ok"))
     }
 
     @Test fun verifyPostMessageOnSlackWrongWebhookURL() {
-        val jsonTitle = buildJsonTitle("#8DB6CD", "Ignore this message. This is an automated OKReport test", false)
+        val jsonTitle = buildJsonTitle("#8DB6CD", "Ignore this message. This is an automated OKReport test", "authorTest", false)
 
         try {
             postToSlack("wrongWebhook", jsonTitle)

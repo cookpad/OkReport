@@ -16,4 +16,4 @@
 
 package com.cookpad.core.models
 
-data class Report(val issue: String, val steps: MutableList<Step>)
+data class Report(val author: String, val issue: String, val steps: MutableList<Step>)

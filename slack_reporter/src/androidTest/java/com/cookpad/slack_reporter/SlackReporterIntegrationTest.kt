@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SlackReporterIntegrationTest {
-    private val report = Report("Ignore this message. This is an automated OKReport test", mutableListOf())
+    private val report = Report("Ignore this message. This is an automated OKReport test", "authorTest", mutableListOf())
 
     @Test fun verifySlackReporterSuccess() {
         var success: String? = null

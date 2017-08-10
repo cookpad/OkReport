@@ -28,7 +28,7 @@ import java.io.FileOutputStream
 
 object OkReportRepository {
     internal lateinit var reporter: Reporter
-    internal var report: Report = Report("", mutableListOf())
+    internal var report: Report = Report("", "", mutableListOf())
 
     /**
      * Helper method to save a bitmap.
@@ -59,4 +59,19 @@ object OkReportRepository {
         }
         return BitmapFactory.decodeStream(FileInputStream(File(path)), null, options)
     }
+
+    private val PREFS_NAME = "com.cookpad.ok_report"
+    private val KEY_AUTHOR = "key_author"
+
+    fun saveAuthor(context: Context, author: String) =
+            context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                    .edit()
+                    .putString(KEY_AUTHOR, author)
+                    .apply()
+
+
+    fun retrieveAuthor(context: Context): String =
+            context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                    .getString(KEY_AUTHOR, "")
+
 }

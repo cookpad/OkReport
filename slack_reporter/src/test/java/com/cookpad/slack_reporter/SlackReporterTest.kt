@@ -11,8 +11,8 @@ class SlackReporterTest {
     @Test fun verifyBuildJsonTitle() {
         val hexColor = "#8DB6CD"
         val reportTitle = "A title report"
-        val jsonTitle = buildJsonTitle(hexColor, reportTitle, true)
-        val expectedJsonTitle = "{\"attachments\":[{\"color\":\"#8DB6CD\",\"mrkdwn_in\":[\"pretext\"],\"pretext\":\"<!channel>  *New Report*\",\"fields\":[{\"title\":\"What's the issue?\",\"value\":\"A title report\"}],\"fallback\":\"<!channel>  *New Report*\"}]}"
+        val jsonTitle = buildJsonTitle(hexColor, reportTitle, "authorTest", true)
+        val expectedJsonTitle = "{\"attachments\":[{\"color\":\"#8DB6CD\",\"mrkdwn_in\":[\"pretext\"],\"pretext\":\"<!channel>  *New Report* from @authorTest\",\"fields\":[{\"title\":\"What's the issue?\",\"value\":\"A title report\"}],\"fallback\":\"<!channel>  *New Report* from @authorTest\"}]}"
         assertThat(jsonTitle, `is`(expectedJsonTitle))
     }
 

@@ -12,6 +12,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import com.cookpad.core.data.OkReportRepository
 import io.victoralbertos.device_animation_test_rule.DeviceAnimationTestRule
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
@@ -89,11 +90,16 @@ class OkReportTest {
     }
 
     @Test fun step6VerifySendReport() {
+        clearSharedPreferences()
+
         onView(allOf(withId(R.id.btTrigger), isDisplayed())).perform(click())
 
         removeSteps(4)
 
         onView(allOf(withId(R.id.menu_item_send_report), isDisplayed())).perform(click())
+
+        onView(withId(android.R.id.input)).perform(click(), replaceText("authorTest"), closeSoftKeyboard())
+        onView(allOf(withId(R.id.md_buttonDefaultPositive), isDisplayed())).perform(click())
 
         onView(withId(R.id.ivBackground)).check(matches(isDisplayed()))
     }
@@ -124,6 +130,10 @@ class OkReportTest {
         for (i in 1..numberOf) {
             onView(withId(R.id.rvSteps)).perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, clickChildViewWithId(R.id.btRemoveStep)))
         }
+    }
+
+    private fun clearSharedPreferences() {
+        OkReportRepository.saveAuthor(rule.activity, "")
     }
 }
 

@@ -40,4 +40,13 @@ class OkReportRepositoryTest {
         assertThat(savedBitmap.byteCount, `is`(not(0)))
     }
 
+    @Test fun verifySaveAndRetrieveAuthor() {
+        val someAuthor = "someAuthor"
+        val context = InstrumentationRegistry.getTargetContext()
+
+        OkReportRepository.saveAuthor(context, someAuthor)
+
+        assertThat(OkReportRepository.retrieveAuthor(context), `is`(someAuthor))
+    }
+
 }

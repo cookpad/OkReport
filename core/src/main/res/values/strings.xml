@@ -17,4 +17,7 @@
     <string name="highlight_screenshot">Highlight screenshot</string>
     <string name="clear">Clear</string>
     <string name="ok">OK</string>
+    <string name="author">Author</string>
+    <string name="author_report">Author\'s report</string>
+    <string name="write_your_name">Write your name</string>
 </resources>
