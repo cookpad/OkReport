@@ -27,15 +27,15 @@ allprojects {
 Add to app module *gradle.build* file
 ```gradle
 dependencies {
-	compile 'com.github.cookpad:OkReport:core:0.0.2'
+	compile 'com.github.cookpad:OkReport:core:0.0.3'
 
 	//Post the report on an Slack channel
-	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.2'
-   	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.2'
+	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.3'
+   	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.3'
 
 	//Trigger the report screen when the device is shaken
-	debugCompile 'com.github.cookpad:OkReport:shake_gesture:0.0.2'
-   	releaseCompile 'com.github.cookpad:OkReport:shake_gesture_no_op:0.0.2'
+	debugCompile 'com.github.cookpad:OkReport:shake_gesture:0.0.3'
+   	releaseCompile 'com.github.cookpad:OkReport:shake_gesture_no_op:0.0.3'
 }
 ```
 
