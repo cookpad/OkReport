@@ -83,7 +83,7 @@ class OkReportApp : Application() {
 
 ### <a name="ok_report_workflow"></a> OkReport's workflow
 
-1. #### Go to an app's section, sake the device, explain the issue and describe the step.
+1. #### Go to an app's section, shake the device, explain the issue and describe the step.
 
 ![Screenshots](assets/step1.gif)
 
