@@ -26,7 +26,7 @@ import com.squareup.seismic.ShakeDetector
  * ShakeGesture fulfills the TriggerGesture interface by triggering the report screen when the device is shaken.
  */
 class ShakeGesture(context: Context) : TriggerGesture, ShakeDetector.Listener {
-    private var callback: (() -> Unit)? = null
+    private var callback = {}
 
     init {
         val sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
@@ -38,6 +38,6 @@ class ShakeGesture(context: Context) : TriggerGesture, ShakeDetector.Listener {
     }
 
     override fun hearShake() {
-        callback?.invoke()
+        callback.invoke()
     }
 }
