@@ -102,14 +102,8 @@ private class MultipartUtility(requestUrl: String, private val charset: String) 
         writer.append(LINE_FEED)
         writer.flush()
 
-        val inputStream = FileInputStream(uploadFile)
-        val buffer = ByteArray(4096)
-        var bytesRead = -1
-        while (inputStream.read(buffer).let { bytesRead = it; it != -1 }) {
-            outputStream.write(buffer, 0, bytesRead)
-        }
+        FileInputStream(uploadFile).use { it.copyTo(outputStream) }
         outputStream.flush()
-        inputStream.close()
 
         writer.append(LINE_FEED)
         writer.flush()
