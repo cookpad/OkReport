@@ -29,7 +29,7 @@ class OkReportApp : Application() {
         super.onCreate()
         shakeGesture = ShakeGesture(this)
 
-        val slackReporter = SlackReporter(token, webhookURL, collectDeviceSpecs(this), nameChannelImages)
+        val slackReporter = SlackReporter(token, webhookURL, collectDeviceSpecs(this), nameChannelImages, notifyChannel = false)
         initOkReport(this, shakeGesture, slackReporter)
     }
 }

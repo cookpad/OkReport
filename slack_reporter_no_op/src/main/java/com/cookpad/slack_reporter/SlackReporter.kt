@@ -25,7 +25,7 @@ import com.cookpad.core.models.Report
  * A no-op version of SlackReporter that can be used in release builds.
  */
 class SlackReporter(val token: String, val webhookURL: String, val deviceSpecs: DeviceSpecs,
-                    val idOrNameChannelImages: String, val teamMembers: List<String> = listOf()) : Reporter {
+                    val idOrNameChannelImages: String, val notifyChannel: Boolean = false) : Reporter {
     override fun sendReport(report: Report, reporterCallback: ReporterCallback) {
 
     }
