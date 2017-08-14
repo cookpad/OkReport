@@ -29,7 +29,7 @@ Add to app module *gradle.build* file
 dependencies {
 	compile 'com.github.cookpad:OkReport:core:0.0.4'
 
-	//Post the report on an Slack channel
+	//Post the report on a Slack channel
 	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.4'
    	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.4'
 
@@ -52,7 +52,7 @@ class OkReportApp : Application() {
         // Triggers the report screen when the device is shaken.
         val shakeGesture = ShakeGesture(this)
 
-        // Posts the data retrieved from OkReport into an Slack channel.
+        // Posts the data retrieved from OkReport into a Slack channel.
         val slackReporter = slackReporter()
 
         // Entry point to start OkReport. Call it just one time per life-time application.
@@ -123,7 +123,7 @@ interface TriggerGesture {
 ```
 
 ### <a name="reporter"></a> Reporter
-OkReport logs reports by delegating this responsibility to a given `Reporter`. By adding `slack_reporter` module, OkReport posts the data retrieved from OkReport into an Slack channel. But **clients can supply their own implementation if other logger mechanism is required.**
+OkReport logs reports by delegating this responsibility to a given `Reporter`. By adding `slack_reporter` module, OkReport posts the data retrieved from OkReport into a Slack channel. But **clients can supply their own implementation if other logger mechanism is required.**
 
 If you consider that some Reporter may be interesting to add to this lib, please submit a PR as a new separate module with its own no-op version. **`Reporter` is the `interface` that has be implemented to fulfill the contract**:
 

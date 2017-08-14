@@ -68,9 +68,9 @@ internal fun postToSlack(url: String, payload: String): String {
     }
 }
 
-private class MultipartUtility(requestURL: String, private val charset: String) {
+private class MultipartUtility(requestUrl: String, private val charset: String) {
     private val boundary = "===" + System.currentTimeMillis() + "==="
-    private val urlConnection = (URL(requestURL).openConnection() as HttpURLConnection).apply {
+    private val urlConnection = (URL(requestUrl).openConnection() as HttpURLConnection).apply {
         readTimeout = 10000
         connectTimeout = 15000
         requestMethod = "POST"
@@ -102,14 +102,8 @@ private class MultipartUtility(requestURL: String, private val charset: String) 
         writer.append(LINE_FEED)
         writer.flush()
 
-        val inputStream = FileInputStream(uploadFile)
-        val buffer = ByteArray(4096)
-        var bytesRead = -1
-        while (inputStream.read(buffer).let { bytesRead = it; it != -1 }) {
-            outputStream.write(buffer, 0, bytesRead)
-        }
+        FileInputStream(uploadFile).use { it.copyTo(outputStream) }
         outputStream.flush()
-        inputStream.close()
 
         writer.append(LINE_FEED)
         writer.flush()
@@ -124,6 +118,8 @@ private class MultipartUtility(requestURL: String, private val charset: String) 
 
         val input = BufferedInputStream(urlConnection.inputStream)
         response.append(input.bufferedReader().use { it.readText() })
+
+        outputStream.close()
         urlConnection.disconnect()
 
         return response.toString().apply {
