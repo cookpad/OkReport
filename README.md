@@ -27,14 +27,14 @@ allprojects {
 Add to app module *gradle.build* file
 ```gradle
 dependencies {
-	compile 'com.github.cookpad:OkReport:core:0.0.4'
+	compile 'com.github.cookpad:OkReport:core:0.0.5'
 
 	//Square lib to rely on for triggering the report screen when the device is shaken
 	compile 'com.squareup:seismic:1.0.2'
 
 	//Post the report on a Slack channel
-	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.4'
-   	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.4'
+	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.5'
+   	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.5'
 }
 ```
 
@@ -85,23 +85,19 @@ class OkReportApp : Application() {
 
 1. #### Go to an app's section, shake the device, explain the issue and describe the step.
 
-![Screenshots](assets/step1.gif)
+![Screenshots](assets/step1A.png) ![Screenshots](assets/step1B.png)
 
 2. #### Add as much steps as required following the previous instruction.
 
-![Screenshots](assets/step2.gif)
+![Screenshots](assets/step2A.png) ![Screenshots](assets/step2B.png)
 
 3. #### If required, highlight some area of the screenshot
 
-![Screenshots](assets/step3.gif)
+![Screenshots](assets/step3A.png) ![Screenshots](assets/step3B.png)
 
-4. #### You may have to delete some steps.
+4. #### Submit the report
 
-![Screenshots](assets/step4.gif)
-
-5. #### Submit the report
-
-![Screenshots](assets/step5.gif)
+![Screenshots](assets/step4A.png) ![Screenshots](assets/step4B.png)
 
 #### This is how the report looks on Slack's channel.
 
