@@ -26,6 +26,9 @@ import com.cookpad.core.models.Step
 import com.cookpad.core.ui.OkReportActivity
 import github.nisrulz.screenshott.ScreenShott
 
+/**
+ * Call OkReport::trigger to show OkReport's screen.
+ */
 class OkReport(val trigger: () -> Unit) {
     fun trigger() {
         trigger.invoke()
@@ -36,7 +39,6 @@ class OkReport(val trigger: () -> Unit) {
  * Entry point to start OkReport. Call it just one time per life-time application.
  *
  * @property application an Android application instance.
- * @property triggerGesture a valid implementation of TriggerGesture interface.
  * @property reporter a valid implementation of Reporter interface.
  */
 fun initOkReport(application: Application,
@@ -79,7 +81,7 @@ fun initOkReport(application: Application,
         return OkReportRepository.saveBitmap(activity, screenShot, name)
     }
 
-    val okReport = OkReport {
+    return OkReport {
         if (!okReportActivityIsAtFront) {
             okReportActivityIsAtFront = true
 
@@ -94,6 +96,5 @@ fun initOkReport(application: Application,
             }
         }
     }
-    return okReport
 
 }

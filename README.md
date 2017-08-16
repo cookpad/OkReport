@@ -134,7 +134,7 @@ initOkReport(this, CustomReporter())
 
 ## Credits
 * Highlight screenshots: [Ink](https://github.com/simplifycom/ink-android). A light-weight, customizable view for capturing a signature or drawing in an Android app.
-* Trigger gesture: [Ink](https://github.com/square/seismic). Android device shake detection.
+* Trigger gesture: [Seismic](https://github.com/square/seismic). Android device shake detection.
 
 ## Limitations
 * OkReport is **not meant to be used as a way of getting feedback from final users on production environment**, it rather should be conceived as a communication tool to facilitate internal reporting.
