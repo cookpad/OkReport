@@ -19,25 +19,21 @@ package com.cookpad.shake_gesture
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
 import android.hardware.SensorManager
-import com.cookpad.core.TriggerGesture
 import com.squareup.seismic.ShakeDetector
 
 /**
  * ShakeGesture fulfills the TriggerGesture interface by triggering the report screen when the device is shaken.
  */
-class ShakeGesture(context: Context) : TriggerGesture, ShakeDetector.Listener {
-    private var callback = {}
+class ShakeGesture(context: Context) : ShakeDetector.Listener {
+    var onShakeListener: (() -> Unit)? = null
 
     init {
         val sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
         ShakeDetector(this).start(sensorManager)
     }
 
-    override fun onTrigger(callback: () -> Unit) {
-        this.callback = callback
+    override fun hearShake() {
+        onShakeListener?.invoke()
     }
 
-    override fun hearShake() {
-        callback.invoke()
-    }
 }

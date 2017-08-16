@@ -24,3 +24,6 @@ interface TriggerGesture {
     fun onTrigger(callback: () -> Unit)
 }
 
+interface Triggerer {
+    fun trigger()
+}

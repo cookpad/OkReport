@@ -26,6 +26,12 @@ import com.cookpad.core.models.Step
 import com.cookpad.core.ui.OkReportActivity
 import github.nisrulz.screenshott.ScreenShott
 
+class OkReport(val trigger: () -> Unit) {
+    fun trigger() {
+        trigger.invoke()
+    }
+}
+
 /**
  * Entry point to start OkReport. Call it just one time per life-time application.
  *
@@ -34,8 +40,7 @@ import github.nisrulz.screenshott.ScreenShott
  * @property reporter a valid implementation of Reporter interface.
  */
 fun initOkReport(application: Application,
-                 triggerGesture: TriggerGesture,
-                 reporter: Reporter) {
+                 reporter: Reporter): OkReport {
     OkReportRepository.reporter = reporter
 
     var liveActivity: Activity? = null
@@ -74,18 +79,21 @@ fun initOkReport(application: Application,
         return OkReportRepository.saveBitmap(activity, screenShot, name)
     }
 
-    triggerGesture.onTrigger {
-        if (okReportActivityIsAtFront) return@onTrigger
-        okReportActivityIsAtFront = true
+    val okReport = OkReport {
+        if (!okReportActivityIsAtFront) {
+            okReportActivityIsAtFront = true
 
-        liveActivity?.let {
-            val pathImage = takeScreenShot(it)
-            val step = Step("", pathImage)
-            OkReportRepository.report.steps.add(step)
+            liveActivity?.let {
+                val pathImage = takeScreenShot(it)
+                val step = Step("", pathImage)
+                OkReportRepository.report.steps.add(step)
 
-            val intent = Intent(it, OkReportActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            it.startActivity(intent)
+                val intent = Intent(it, OkReportActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                it.startActivity(intent)
+            }
         }
     }
+    return okReport
+
 }
