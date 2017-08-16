@@ -40,6 +40,8 @@ import org.json.JSONObject
 class SlackReporter(val token: String, val webhookURL: String, val deviceSpecs: DeviceSpecs,
                     val idOrNameChannelImages: String, val notifyChannel: Boolean = false) : Reporter {
     override fun sendReport(report: Report, reporterCallback: ReporterCallback) {
+        returnIfEmptyConfig(reporterCallback)
+
         val asyncTask = object : AsyncTask<String, Void, Response>() {
 
             override fun doInBackground(vararg ignored: String): Response {
@@ -66,6 +68,13 @@ class SlackReporter(val token: String, val webhookURL: String, val deviceSpecs: 
         }
 
         asyncTask.execute("")
+    }
+
+    inline private fun returnIfEmptyConfig(reporterCallback: ReporterCallback) {
+        if (token.isEmpty() || webhookURL.isEmpty() || idOrNameChannelImages.isEmpty()) {
+            reporterCallback.error(Throwable("Looks like you forgot to setup your Slack configuration. Check this https://github.com/cookpad/OkReport#init-and-configire-okreport"))
+            return
+        }
     }
 }
 
