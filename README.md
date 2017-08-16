@@ -116,6 +116,16 @@ If you consider that some gesture may be interesting to add to this lib, please 
 interface TriggerGesture {
     fun onTrigger(callback: () -> Unit)
 }
+
+class CustomTriggerGesture(context: Context) : TriggerGesture {
+
+    override fun onTrigger(callback: () -> Unit) {
+        //When the internal event is triggered, make a call to the callback function.
+        customListener {
+            callback()
+        }
+    }
+}
 ```
 
 ### <a name="reporter"></a> Reporter
@@ -131,6 +141,20 @@ interface Reporter {
 interface ReporterCallback {
     fun success(message: String)
     fun error(error: Throwable)
+}
+
+class CustomReporter() : Reporter {
+    override fun sendReport(report: Report, reporterCallback: ReporterCallback) {
+        //Take report's data and send it whatever you want.
+        val response = someServer.sendReport(report)
+
+        //And let know OkReport about the result
+        if (response.ok) {
+            reporterCallback.success("ok")
+        } else {
+            reporterCallback.error(RuntimeException("ko"))
+        }
+    }
 }
 ```
 
