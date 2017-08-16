@@ -28,7 +28,7 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<View>(R.id.btTrigger).setOnClickListener { OkReportApp.shakeGesture.hearShake() }
+        findViewById<View>(R.id.btTrigger).setOnClickListener { OkReportApp.okReport.trigger() }
 
         shuffleBackground()
     }

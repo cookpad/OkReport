@@ -26,10 +26,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     compile project(':core')
-    compile project(':shake_gesture')
     compile project(':slack_reporter')
-
-    //compile project(':shake_gesture_no_op')
+    compile 'com.squareup:seismic:1.0.2'
     //compile project(':slack_reporter_no_op')
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

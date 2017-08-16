@@ -15,21 +15,26 @@
  */package com.cookpad.okreport
 
 import android.app.Application
+import android.content.Context
+import android.hardware.SensorManager
+import com.cookpad.core.OkReport
 import com.cookpad.core.collectDeviceSpecs
 import com.cookpad.core.initOkReport
-import com.cookpad.shake_gesture.ShakeGesture
 import com.cookpad.slack_reporter.SlackReporter
+import com.squareup.seismic.ShakeDetector
 
 class OkReportApp : Application() {
     companion object {
-        lateinit var shakeGesture: ShakeGesture
+        lateinit var okReport: OkReport
     }
 
     override fun onCreate() {
         super.onCreate()
-        shakeGesture = ShakeGesture(this)
 
         val slackReporter = SlackReporter(token, webhookURL, collectDeviceSpecs(this), nameChannelImages, notifyChannel = false)
-        initOkReport(this, shakeGesture, slackReporter)
+        okReport = initOkReport(this, slackReporter)
+
+        val sensorManager = this.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        ShakeDetector({ okReport.trigger() }).start(sensorManager)
     }
 }
