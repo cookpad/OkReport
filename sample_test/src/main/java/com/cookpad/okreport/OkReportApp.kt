@@ -30,7 +30,7 @@ class OkReportApp : Application() {
         super.onCreate()
 
         val slackReporter = SlackReporter(token, webhookURL, collectDeviceSpecs(this), nameChannelImages, notifyChannel = false)
-        val okReport = initOkReport(this, slackReporter)
+        okReport = initOkReport(this, slackReporter)
 
         ShakeGesture(this).apply {
             onShakeListener = {
