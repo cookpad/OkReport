@@ -9,7 +9,7 @@ Because not all bugs are easy to catch, because not all bugs end with a clean re
 ## Features
 * **Write reports organically within the app**, without loosing the context which is precisely the source of the problem and therefore it has to be properly tamed.
 * A loosely coupled system which allows to plug in **custom implementations for [TriggerGesture](#trigger_gesture) and [Reporter](#reporter)**
-* **Built-in no-op versions** that can be used in release builds.
+* **Built-in no-op versions** that can be used in release builds in order to avoid bloating production code with pointless dependencies.
 * **A minimal-user-friendly UI**
 
 
@@ -41,7 +41,7 @@ dependencies {
 
 ## Usage
 
-### Init and configire OkReport
+### Init and confugire OkReport
 
 ```kotlin
 class OkReportApp : Application() {
