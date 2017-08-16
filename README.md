@@ -136,6 +136,9 @@ interface ReporterCallback {
 
 ## Credits
 * Highlight screenshots: [Ink](https://github.com/simplifycom/ink-android). A light-weight, customizable view for capturing a signature or drawing in an Android app.
+* Trigger gesture: [Seismic](https://github.com/square/seismic). Android device shake detection.
+* Take screenshots: [Screenshott](https://github.com/nisrulz/screenshott). Take a screenshot of your view layout programmatically.
+* Material Dialogs: [material-dialogs](https://github.com/afollestad/material-dialogs). A beautiful, fluid, and customizable dialogs API.
 
 ## Limitations
 * OkReport is **not meant to be used as a way of getting feedback from final users on production environment**, it rather should be conceived as a communication tool to facilitate internal reporting.
