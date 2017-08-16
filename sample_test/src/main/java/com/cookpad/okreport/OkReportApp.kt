@@ -15,11 +15,13 @@
  */package com.cookpad.okreport
 
 import android.app.Application
+import android.content.Context
+import android.hardware.SensorManager
 import com.cookpad.core.OkReport
 import com.cookpad.core.collectDeviceSpecs
 import com.cookpad.core.initOkReport
-import com.cookpad.shake_gesture.ShakeGesture
 import com.cookpad.slack_reporter.SlackReporter
+import com.squareup.seismic.ShakeDetector
 
 class OkReportApp : Application() {
     companion object {
@@ -32,10 +34,7 @@ class OkReportApp : Application() {
         val slackReporter = SlackReporter(token, webhookURL, collectDeviceSpecs(this), nameChannelImages, notifyChannel = false)
         okReport = initOkReport(this, slackReporter)
 
-        ShakeGesture(this).apply {
-            onShakeListener = {
-                okReport.trigger()
-            }
-        }
+        val sensorManager = this.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        ShakeDetector({ okReport.trigger() }).start(sensorManager)
     }
 }

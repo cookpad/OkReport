@@ -8,7 +8,7 @@ Because not all bugs are easy to catch, because not all bugs end with a clean re
 
 ## Features
 * **Write reports organically within the app**, without loosing the context which is precisely the source of the problem and therefore it has to be properly tamed.
-* A loosely coupled system which allows to plug in **custom implementations for [TriggerGesture](#trigger_gesture) and [Reporter](#reporter)**
+* Allows to plug in **custom implementations for [Reporter](#reporter)**
 * **Built-in no-op versions** that can be used in release builds.
 * **A minimal-user-friendly UI**
 
@@ -29,19 +29,18 @@ Add to app module *gradle.build* file
 dependencies {
 	compile 'com.github.cookpad:OkReport:core:0.0.4'
 
+	//Square lib to rely on for triggering the report screen when the device is shaken
+	compile 'com.squareup:seismic:1.0.2'
+
 	//Post the report on a Slack channel
 	debugCompile 'com.github.cookpad:OkReport:slack_reporter:0.0.4'
    	releaseCompile 'com.github.cookpad:OkReport:slack_reporter_no_op:0.0.4'
-
-	//Trigger the report screen when the device is shaken
-	debugCompile 'com.github.cookpad:OkReport:shake_gesture:0.0.4'
-   	releaseCompile 'com.github.cookpad:OkReport:shake_gesture_no_op:0.0.4'
 }
 ```
 
 ## Usage
 
-### Init and configire OkReport
+### Init and configure OkReport
 
 ```kotlin
 class OkReportApp : Application() {
@@ -49,14 +48,15 @@ class OkReportApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Triggers the report screen when the device is shaken.
-        val shakeGesture = ShakeGesture(this)
-
         // Posts the data retrieved from OkReport into a Slack channel.
         val slackReporter = slackReporter()
 
         // Entry point to start OkReport. Call it just one time per life-time application.
-        initOkReport(this, shakeGesture, slackReporter)
+        val okReport = initOkReport(this, slackReporter)
+
+        // Triggers the report screen when the device is shaken.
+        val sensorManager = this.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        ShakeDetector({ okReport.trigger() }).start(sensorManager)
     }
 
     private fun slackReporter() : Reporter {
@@ -109,37 +109,32 @@ class OkReportApp : Application() {
 
 ## Customization
 
-OkReport's sources is composed by several Android modules. This loosely coupled system allows clients to **provide their own implementations when some customization is required**.
-
-### <a name="trigger_gesture"></a> TriggerGesture
-The entry point of OkReport is a `TriggerGesture`. By adding `shake_gesture` module, OkReport triggers the report screen when the device is shaken. But **clients can supply their own implementation if other trigger gesture is required.**
-
-If you consider that some gesture may be interesting to add to this lib, please submit a PR as a new separate module with its own no-op version. **`TriggerGesture` is the `interface` that has be implemented to fulfill the contract**:
-
-```kotlin
-interface TriggerGesture {
-    fun onTrigger(callback: () -> Unit)
-}
-```
-
 ### <a name="reporter"></a> Reporter
 OkReport logs reports by delegating this responsibility to a given `Reporter`. By adding `slack_reporter` module, OkReport posts the data retrieved from OkReport into a Slack channel. But **clients can supply their own implementation if other logger mechanism is required.**
 
 If you consider that some Reporter may be interesting to add to this lib, please submit a PR as a new separate module with its own no-op version. **`Reporter` is the `interface` that has be implemented to fulfill the contract**:
 
 ```kotlin
-interface Reporter {
-    fun sendReport(report: Report, reporterCallback: ReporterCallback)
+class CustomReporter() : Reporter {
+    override fun sendReport(report: Report, reporterCallback: ReporterCallback) {
+        //Take report's data and send it whatever you want.
+        val response = someServer.sendReport(report)
+
+        //And let know OkReport about the result
+        if (response.ok) {
+            reporterCallback.success("ok")
+        } else {
+            reporterCallback.error(RuntimeException("ko"))
+        }
+    }
 }
 
-interface ReporterCallback {
-    fun success(message: String)
-    fun error(error: Throwable)
-}
+initOkReport(this, CustomReporter())
 ```
 
 ## Credits
 * Highlight screenshots: [Ink](https://github.com/simplifycom/ink-android). A light-weight, customizable view for capturing a signature or drawing in an Android app.
+* Trigger gesture: [Ink](https://github.com/square/seismic). Android device shake detection.
 
 ## Limitations
 * OkReport is **not meant to be used as a way of getting feedback from final users on production environment**, it rather should be conceived as a communication tool to facilitate internal reporting.

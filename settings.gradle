@@ -1,1 +1,1 @@
-include ':sample_test', ':core', ':slack_reporter', ':shake_gesture', ':shake_gesture_no_op', ':slack_reporter_no_op'
+include ':sample_test', ':core', ':slack_reporter', ':slack_reporter_no_op'
