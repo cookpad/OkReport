@@ -1,3 +1,6 @@
+# [DEPRECATED] 
+## :warning: This repository is no longer actively maintained :warning:
+
 # OkReport
 
 An **Android library** which **allows testers to submit reports without living the app**.
